@@ -321,6 +321,31 @@ input[type="text"]:focus { border-color: var(--accent); }
 
 .reset-btn { margin-top: 8px; }
 
+/* Progress bar */
+.progress-wrap {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.progress-track {
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #7c6bff, #5b8eff);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+  width: 0%;
+}
+.progress-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
 /* Error */
 .error-panel {
   margin-top: 20px;

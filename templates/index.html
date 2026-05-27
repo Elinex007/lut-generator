@@ -24,9 +24,14 @@
           <div class="drop-zone" id="videoDropZone">
             <input type="file" id="videoInput" name="video" accept=".mp4,.mov,.avi,.mkv,.webm,.mxf" hidden />
             <div class="drop-icon">🎬</div>
-            <p>Glisse ta vidéo ici<br/><small>MP4, MOV, AVI, MKV — max 500 Mo</small></p>
+            <p>Glisse ta vidéo ici<br/><small>MP4, MOV, AVI, MKV — toute taille</small></p>
             <button type="button" class="btn-secondary" onclick="document.getElementById('videoInput').click()">Choisir un fichier</button>
             <div class="file-info" id="videoInfo" hidden></div>
+          </div>
+          <!-- Frame extraction progress -->
+          <div class="progress-wrap" id="progressWrap" hidden>
+            <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+            <div class="progress-label" id="progressLabel">Extraction des frames…</div>
           </div>
         </div>
 
