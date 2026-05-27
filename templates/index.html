@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LUT Generator</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>LUT Generator</h1>
+      <p class="subtitle">Crée un <strong>.cube</strong> personnalisé à partir de ta vidéo, une image de référence et une description de style</p>
+    </header>
+
+    <form id="lutForm" enctype="multipart/form-data">
+      <div class="grid">
+
+        <!-- Video upload -->
+        <div class="card" id="videoCard">
+          <div class="card-label">
+            <span class="badge">1</span> Vidéo source
+          </div>
+          <div class="drop-zone" id="videoDropZone">
+            <input type="file" id="videoInput" name="video" accept=".mp4,.mov,.avi,.mkv,.webm,.mxf" hidden />
+            <div class="drop-icon">🎬</div>
+            <p>Glisse ta vidéo ici<br/><small>MP4, MOV, AVI, MKV — max 500 Mo</small></p>
+            <button type="button" class="btn-secondary" onclick="document.getElementById('videoInput').click()">Choisir un fichier</button>
+            <div class="file-info" id="videoInfo" hidden></div>
+          </div>
+        </div>
+
+        <!-- Reference image upload -->
+        <div class="card">
+          <div class="card-label">
+            <span class="badge optional">2</span> Image de référence <span class="tag-opt">optionnel</span>
+          </div>
+          <div class="drop-zone" id="refDropZone">
+            <input type="file" id="refInput" name="reference" accept=".jpg,.jpeg,.png,.webp,.tiff" hidden />
+            <div class="drop-icon">🖼️</div>
+            <p>L'image dont tu veux capturer le style<br/><small>JPG, PNG, WEBP, TIFF</small></p>
+            <button type="button" class="btn-secondary" onclick="document.getElementById('refInput').click()">Choisir une image</button>
+            <div class="file-info" id="refInfo" hidden></div>
+            <div class="ref-preview-wrap" id="refPreviewWrap" hidden>
+              <img id="refPreview" src="" alt="Référence" />
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Style description -->
+      <div class="card full-width">
+        <div class="card-label">
+          <span class="badge">3</span> Description du style
+        </div>
+        <textarea id="descriptionInput" name="description" rows="3"
+          placeholder="Ex: « Style cinématique chaud avec des ombres bleutées, type années 90, léger grain de film, contrastes prononcés »"></textarea>
+        <div class="presets">
+          <span class="preset-label">Presets rapides :</span>
+          <button type="button" class="preset" data-text="Cinématique Hollywood : tons chauds sur les hautes lumières, ombres légèrement bleutées, contraste élevé, légère désaturation">🎥 Cinéma</button>
+          <button type="button" class="preset" data-text="Style vintage argentique années 70 : couleurs délavées, noirs relevés, dominante orange-jaune, léger grain">📷 Vintage</button>
+          <button type="button" class="preset" data-text="Ambiance froide et épurée : tons bleu-cyan, saturation modérée, hautes lumières douces, look éditorial moderne">❄️ Cold</button>
+          <button type="button" class="preset" data-text="Split tone teal & orange : ombres cyan-turquoise, hautes lumières orange chaud, look blockbuster">🎞 Teal & Orange</button>
+          <button type="button" class="preset" data-text="Noir et blanc contrasté : désaturation totale, fort contraste, noirs profonds, hautes lumières légèrement adoucies">⬛ N&B</button>
+          <button type="button" class="preset" data-text="Ambiance dorée heure magique : très chaud, saturation boostée, hautes lumières lumineuses, ombres dorées">🌅 Golden Hour</button>
+        </div>
+      </div>
+
+      <!-- LUT name -->
+      <div class="card full-width name-card">
+        <div class="card-label"><span class="badge">4</span> Nom du LUT</div>
+        <input type="text" id="lutNameInput" name="lut_name" placeholder="Mon LUT" maxlength="64" />
+      </div>
+
+      <button type="submit" class="btn-generate" id="generateBtn">
+        <span class="btn-text">Générer le LUT</span>
+        <span class="spinner" hidden></span>
+      </button>
+    </form>
+
+    <!-- Result panel -->
+    <div class="result-panel" id="resultPanel" hidden>
+      <div class="result-inner">
+        <div class="result-icon">✅</div>
+        <h2 id="resultTitle">LUT généré !</h2>
+
+        <a class="btn-download" id="downloadBtn" href="#" download>
+          Télécharger le .cube
+        </a>
+
+        <div class="result-details">
+          <h3>Paramètres appliqués</h3>
+          <div class="reasoning" id="reasoning"></div>
+          <table class="params-table" id="paramsTable"></table>
+        </div>
+
+        <div class="result-details">
+          <h3>Analyse de la vidéo source</h3>
+          <div class="analysis" id="analysisInfo"></div>
+        </div>
+
+        <button type="button" class="btn-secondary reset-btn" id="resetBtn">Générer un autre LUT</button>
+      </div>
+    </div>
+
+    <!-- Error panel -->
+    <div class="error-panel" id="errorPanel" hidden>
+      <span class="error-icon">⚠️</span>
+      <span id="errorMsg"></span>
+    </div>
+  </div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
