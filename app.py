@@ -21,8 +21,17 @@ from lut_engine import (
 load_dotenv()
 
 app = Flask(__name__)
-# Only reference image + small frames payload needed — 20 MB is plenty
-app.config["MAX_CONTENT_LENGTH"] = 20 * 1024 * 1024
+app.config["MAX_CONTENT_LENGTH"] = 100 * 1024 * 1024  # 100 MB — frames can be large on 4K videos
+
+
+@app.errorhandler(413)
+def too_large(e):
+    return jsonify({"error": "Payload trop grand. Réduis le nombre de frames ou la qualité."}), 413
+
+
+@app.errorhandler(500)
+def server_error(e):
+    return jsonify({"error": f"Erreur serveur : {e}"}), 500
 
 OUTPUT_DIR = Path("outputs")
 OUTPUT_DIR.mkdir(exist_ok=True)

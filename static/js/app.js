@@ -93,8 +93,8 @@
           return;
         }
 
-        // Downscale for efficiency — 480px wide is more than enough for color analysis
-        const W = 480;
+        // 320px wide is sufficient for color statistics — keeps payload small
+        const W = 320;
         const H = Math.round(W * video.videoHeight / video.videoWidth);
         canvas.width  = W;
         canvas.height = H;
